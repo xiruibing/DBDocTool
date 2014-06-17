@@ -21,15 +21,14 @@ public class DBInfo {
 		DB_DRIVER_MAP.put("db2", "org.postgresql.Driver");
 		DB_DRIVER_MAP.put("oracle", "oracle.jdbc.driver.OracleDriver");
 
-		DB_URL_MAP.put("mysql", "jdbc:mysql://127.0.0.1:3306/scutcs");
-		DB_URL_MAP
-				.put("sqlserver2000",
-						"jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=sample");
+		DB_URL_MAP.put("mysql", "jdbc:mysql://127.0.0.1:3306/db");
+		DB_URL_MAP.put("sqlserver2000",
+				"jdbc:microsoft:sqlserver://127.0.0.1:1433;DatabaseName=db");
 		DB_URL_MAP.put("sqlserver2005",
-				"jdbc:sqlserver://localhost:1433;DatabaseName=test");
-		DB_URL_MAP.put("postgresql", "jdbc:postgresql://localhost:5432/testdb");
-		DB_URL_MAP.put("db2", "jdbc:db2://192.168.0.93:50000/CPICSMS");
-		DB_URL_MAP.put("oracle", "jdbc:oracle:thin:@10.10.20.15:1521:ora9");
+				"jdbc:sqlserver://127.0.0.1:1433;DatabaseName=db");
+		DB_URL_MAP.put("postgresql", "jdbc:postgresql://127.0.0.1:5432/db");
+		DB_URL_MAP.put("db2", "jdbc:db2://127.0.0.1:50000/db");
+		DB_URL_MAP.put("oracle", "jdbc:oracle:thin:@127.0.0.1:1521:db");
 	}
 
 }
