@@ -21,11 +21,6 @@ public class CMDTool {
 			System.exit(-1);
 		}
 		
-		System.err.println(parameters.getHost());
-		System.err.println(parameters.getPort());
-		System.err.println(parameters.getDatabase());
-		System.err.println(parameters.getUser());
-
 		DBUtils dbUtils = new DBUtils(parameters);
 
 		long startTime = System.currentTimeMillis();
