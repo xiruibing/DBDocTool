@@ -18,7 +18,7 @@ public class DBInfo {
 		DB_DRIVER_MAP.put("sqlserver2005",
 				"com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		DB_DRIVER_MAP.put("postgresql", "org.postgresql.Driver");
-		DB_DRIVER_MAP.put("db2", "org.postgresql.Driver");
+		DB_DRIVER_MAP.put("db2", "com.ibm.db2.jcc.DB2Driver");
 		DB_DRIVER_MAP.put("oracle", "oracle.jdbc.driver.OracleDriver");
 
 		

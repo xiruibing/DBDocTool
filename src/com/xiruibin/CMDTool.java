@@ -36,7 +36,7 @@ public class CMDTool {
 		Word2007.productWordForm(data, parameters);
 
 		long endTime = System.currentTimeMillis();
-		System.out.println("�ܹ���ʱ:" + (endTime - startTime) + "ms");
+		System.out.println("总共用时:" + (endTime - startTime) + "ms");
 
 	}
 

@@ -24,12 +24,9 @@ public final class DBUtils {
 
 	private ResultSet rs = null;
 
-	static {
-		DBDriverAutoLoad.load();
-	}
-
 	public DBUtils(Parameters parameters) {
 		this.parameters = parameters;
+		DBDriverAutoLoad.load();
 	}
 
 	public Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> getDatabaseInfo()
