@@ -7,7 +7,7 @@ public class DBDriverAutoLoad {
 	public static void load() {
 		for (Entry<String, String> entry : DBInfo.DB_DRIVER_MAP.entrySet()) {
 			if (tryload(entry.getValue())) {
-				DBInfo.dbtype = entry.getKey();
+				DBInfo.currentdbtype = entry.getKey();
 				break;
 			}
 		}

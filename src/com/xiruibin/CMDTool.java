@@ -1,5 +1,7 @@
 package com.xiruibin;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.xiruibin.db.util.CMDHelper;
@@ -28,13 +30,13 @@ public class CMDTool {
 
 		long startTime = System.currentTimeMillis();
 
-//		Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> data = dbUtils
-//				.getDatabaseInfo();
-//
-//		Word2007.productWordForm(data, parameters);
+		Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> data = dbUtils
+				.getDatabaseInfo();
+
+		Word2007.productWordForm(data, parameters);
 
 		long endTime = System.currentTimeMillis();
-		System.out.println("总共用时:" + (endTime - startTime) + "ms");
+		System.out.println("锟杰癸拷锟斤拷时:" + (endTime - startTime) + "ms");
 
 	}
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class DBInfo {
 
-	public static String dbtype = null;
+	public static String currentdbtype = null;
 
 	public final static Map<String, String> DB_DRIVER_MAP = new HashMap<String, String>();
 
@@ -21,14 +21,32 @@ public class DBInfo {
 		DB_DRIVER_MAP.put("db2", "org.postgresql.Driver");
 		DB_DRIVER_MAP.put("oracle", "oracle.jdbc.driver.OracleDriver");
 
-		DB_URL_MAP.put("mysql", "jdbc:mysql://127.0.0.1:3306/db");
-		DB_URL_MAP.put("sqlserver2000",
-				"jdbc:microsoft:sqlserver://127.0.0.1:1433;DatabaseName=db");
+		
+		DB_URL_MAP.put("mysql", "jdbc:mysql://{ip}:{port}/{database}");
+		DB_URL_MAP
+				.put("sqlserver2000",
+						"jdbc:microsoft:sqlserver://{ip}:{port};DatabaseName={database}");
 		DB_URL_MAP.put("sqlserver2005",
-				"jdbc:sqlserver://127.0.0.1:1433;DatabaseName=db");
-		DB_URL_MAP.put("postgresql", "jdbc:postgresql://127.0.0.1:5432/db");
-		DB_URL_MAP.put("db2", "jdbc:db2://127.0.0.1:50000/db");
-		DB_URL_MAP.put("oracle", "jdbc:oracle:thin:@127.0.0.1:1521:db");
+				"jdbc:sqlserver://{ip}:{port};DatabaseName={database}");
+		DB_URL_MAP
+				.put("postgresql", "jdbc:postgresql://{ip}:{port}/{database}");
+		DB_URL_MAP.put("db2", "jdbc:db2://{ip}:{port}/{database}");
+		DB_URL_MAP.put("oracle", "jdbc:oracle:thin:@{ip}:{port}:{database}");
+	}
+	
+	public static String getDriverUrl(String dbtype, String ip, String port, String dbname) {
+		String dburl = DB_URL_MAP.get(dbtype);
+		if (dburl != null) {
+			return dburl.replace("{ip}", ip).replace("{port}", port).replace("{database}", dbname);
+		}
+		return null;
+	}
+	
+	public static String getCurrentDriverUrl(String ip, String port, String dbname) {
+		if (currentdbtype != null) {
+			return getDriverUrl(currentdbtype, ip, port, dbname);
+		}
+		return null;
 	}
 
 }
