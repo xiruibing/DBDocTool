@@ -10,3 +10,5 @@ DBDocTool
 支持命令行操作
 支持以下数据库：
 Mysql、SQL Server、PostgreSQL、DB2、oracle
+
+<img src="snapshot/1.jpg">
