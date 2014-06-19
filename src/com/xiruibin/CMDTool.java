@@ -4,15 +4,31 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.poi.util.StringUtil;
+
 import com.xiruibin.db.util.CMDHelper;
 import com.xiruibin.db.util.DBUtils;
+import com.xiruibin.db.util.StringUtils;
 
 public class CMDTool {
+	
+	private static Object[] string2ObjectArray(String[] arr) {
+		Object[] obs = new Object[arr.length];
+		for (int i=0; i<arr.length; i++) {
+			obs[i] = arr[i];
+		}
+		return obs;
+	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Please Input Command:");
-		String cmd = sc.nextLine();
+		String cmd = "";
+		if (args == null) {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Please Input Command:");
+			cmd = sc.nextLine();
+		} else {
+			cmd = StringUtils.join(string2ObjectArray(args), ' ');
+		}
 
 		Parameters parameters = CMDHelper.parseCommand(cmd);
 

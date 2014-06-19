@@ -25,7 +25,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 public final class Word2007 {
 
     /**
-     * Éú³Éword£¬±í¸ñ
+     * ç”Ÿæˆwordï¼Œè¡¨æ ¼
      * 
      * @param data
      * @throws Exception
@@ -50,9 +50,9 @@ public final class Word2007 {
             LinkedHashMap<String, LinkedHashMap<String, String>> columns = data.get(table_name);
             int rows = columns.size();
             XWPFTable xTable = xDocument.createTable(rows + 1, 7);
-            //±í¸ñÊôĞÔ
+            //è¡¨æ ¼å±æ€§
             CTTblPr tablePr = xTable.getCTTbl().addNewTblPr();
-            //±í¸ñ¿í¶È
+            //è¡¨æ ¼å®½åº¦
             CTTblWidth width = tablePr.addNewTblW();
             width.setW(BigInteger.valueOf(8600));
 
@@ -61,28 +61,28 @@ public final class Word2007 {
             xTable.getRow(i).setHeight(380);
             CTTcPr cellPr0 = xTable.getRow(i).getCell(0).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(1700));
-            setCellText(xDocument, xTable.getRow(i).getCell(0), "´úÂë", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(0), "ä»£ç ", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(1).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(3000));
-            setCellText(xDocument, xTable.getRow(i).getCell(1), "×¢ÊÍ", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(1), "æ³¨é‡Š", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(2).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(1000));
-            setCellText(xDocument, xTable.getRow(i).getCell(2), "ÀàĞÍ", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(2), "ç±»å‹", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(3).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(700));
-            setCellText(xDocument, xTable.getRow(i).getCell(3), "Ä¬ÈÏÖµ", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(3), "é»˜è®¤å€¼", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(4).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(4), "±êÊ¶", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(4), "æ ‡è¯†", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(5).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(5), "Ö÷¼ü", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(5), "ä¸»é”®", "CCCCCC");
             cellPr0 = xTable.getRow(i).getCell(6).getCTTc().addNewTcPr();
             cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(6), "¿ÕÖµ", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(6), "ç©ºå€¼", "CCCCCC");
 
-            i = i + 1;// ÏÂÒ»ĞĞ
-            int j = 0;// ÁĞcolumnË÷Òı
+            i = i + 1;// ä¸‹ä¸€è¡Œ
+            int j = 0;// åˆ—columnç´¢å¼•
 
             Map<String, LinkedHashMap<String, String>> keyColumnMap = keyColumns(columns);
             for (Iterator<String> columnNameIter = keyColumnMap.keySet().iterator(); columnNameIter.hasNext();) {
@@ -100,8 +100,8 @@ public final class Word2007 {
                     j++;
                 }
 
-                ++i;// ÏÂÒ»ĞĞ
-                j = 0;// »Ö¸´µÚÒ»ÁĞ
+                ++i;// ä¸‹ä¸€è¡Œ
+                j = 0;// æ¢å¤ç¬¬ä¸€åˆ—
             }
 
             Iterator<String> cloumnsNameIter = columns.keySet().iterator();
@@ -123,20 +123,20 @@ public final class Word2007 {
                     setCellText(xDocument, xTable.getRow(i).getCell(j),columnsAtt.get(colum_type), "FFFFFF");
                     j++;
                 }
-                j = 0;// »Ö¸´µÚÒ»ÁĞ
-                ++i; //ÏÂÒ»ĞĞ
+                j = 0;// æ¢å¤ç¬¬ä¸€åˆ—
+                ++i; //ä¸‹ä¸€è¡Œ
             }
             
             XWPFTableRow row = xTable.insertNewTableRow(0);
             row.setHeight(380);
 			row.addNewTableCell();
 			row.getCell(0).setColor("CCCCCC");
-			row.getCell(0).setText("ÖĞÎÄÃû³Æ");
+			row.getCell(0).setText("ä¸­æ–‡åç§°");
 			row.addNewTableCell();
 			row.getCell(1).setText("");
 			row.addNewTableCell();
 			row.getCell(2).setColor("CCCCCC");
-			row.getCell(2).setText("Ó¢ÎÄÃû³Æ");
+			row.getCell(2).setText("è‹±æ–‡åç§°");
 			row.addNewTableCell();
 			CTTc cttc = row.getCell(3).getCTTc();
 			CTTcPr ctPr = cttc.addNewTcPr();
@@ -149,7 +149,7 @@ public final class Word2007 {
 			row.setHeight(380);
 			row.addNewTableCell();
 			row.getCell(0).setColor("CCCCCC");
-			row.getCell(0).setText("¹¦ÄÜÃèÊö");
+			row.getCell(0).setText("åŠŸèƒ½æè¿°");
 			row.addNewTableCell();
 			cttc = row.getCell(1).getCTTc();
 			ctPr = cttc.addNewTcPr();
@@ -186,7 +186,7 @@ public final class Word2007 {
     }
 
     /**
-     * ¼ìË÷³öÖ÷¼ükeyÏà¹ØµÄÁĞ
+     * æ£€ç´¢å‡ºä¸»é”®keyç›¸å…³çš„åˆ—
      * 
      * @param columnsMap
      * @return
@@ -198,7 +198,7 @@ public final class Word2007 {
         while (cloumnsNameIter.hasNext()) {
             String colum_name = cloumnsNameIter.next();
             LinkedHashMap<String, String> columnsAtt = columnsMap.get(colum_name);
-            if (columnsAtt.get("column_key").equals("ÊÇ")) {
+            if (columnsAtt.get("column_key").equals("æ˜¯")) {
                 keyColumnMap.put(colum_name, columnsAtt);
                 cloumnsNameIter.remove();
             }
