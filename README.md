@@ -12,3 +12,6 @@ DBDocTool
 Mysql、SQL Server、PostgreSQL、DB2、oracle
 
 <img src="snapshot/1.jpg">
+命令行操作：
+
+<img src="snapshot/2.jpg">
