@@ -59,27 +59,13 @@ public final class Word2007 {
             int i = 0;
             
             xTable.getRow(i).setHeight(380);
-            CTTcPr cellPr0 = xTable.getRow(i).getCell(0).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(1700));
-            setCellText(xDocument, xTable.getRow(i).getCell(0), "代码", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(1).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(3000));
-            setCellText(xDocument, xTable.getRow(i).getCell(1), "注释", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(2).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(1000));
-            setCellText(xDocument, xTable.getRow(i).getCell(2), "类型", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(3).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(700));
-            setCellText(xDocument, xTable.getRow(i).getCell(3), "默认值", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(4).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(4), "标识", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(5).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(5), "主键", "CCCCCC");
-            cellPr0 = xTable.getRow(i).getCell(6).getCTTc().addNewTcPr();
-            cellPr0.addNewTcW().setW(BigInteger.valueOf(350));
-            setCellText(xDocument, xTable.getRow(i).getCell(6), "空值", "CCCCCC");
+            setCellText(xDocument, xTable.getRow(i).getCell(0), "代码", "CCCCCC", getCellWidth(0));
+            setCellText(xDocument, xTable.getRow(i).getCell(1), "注释", "CCCCCC", getCellWidth(1));
+            setCellText(xDocument, xTable.getRow(i).getCell(2), "类型", "CCCCCC", getCellWidth(2));
+            setCellText(xDocument, xTable.getRow(i).getCell(3), "默认值", "CCCCCC", getCellWidth(3));
+            setCellText(xDocument, xTable.getRow(i).getCell(4), "标识", "CCCCCC", getCellWidth(4));
+            setCellText(xDocument, xTable.getRow(i).getCell(5), "主键", "CCCCCC", getCellWidth(5));
+            setCellText(xDocument, xTable.getRow(i).getCell(6), "空值", "CCCCCC", getCellWidth(6));
 
             i = i + 1;// 下一行
             int j = 0;// 列column索引
@@ -88,15 +74,16 @@ public final class Word2007 {
             for (Iterator<String> columnNameIter = keyColumnMap.keySet().iterator(); columnNameIter.hasNext();) {
                 String column_name = columnNameIter.next();
                 LinkedHashMap<String, String> columnsAtt = keyColumnMap.get(column_name);
-
-                setCellText(xDocument, xTable.getRow(i).getCell(j), column_name, "FFFFFF");
+                int cwidth = getCellWidth(j);
+                setCellText(xDocument, xTable.getRow(i).getCell(j), column_name, "FFFFFF", cwidth);
                 ++j;
 
                 Iterator<String> columnTypeIter = columnsAtt.keySet().iterator();
 
                 while (columnTypeIter.hasNext()) {
                     String colum_type = columnTypeIter.next();
-                    setCellText(xDocument, xTable.getRow(i).getCell(j),columnsAtt.get(colum_type), "FFFFFF");
+                    cwidth = getCellWidth(j);
+                    setCellText(xDocument, xTable.getRow(i).getCell(j),columnsAtt.get(colum_type), "FFFFFF", cwidth);
                     j++;
                 }
 
@@ -110,8 +97,9 @@ public final class Word2007 {
             	xTable.getRow(i).setHeight(380);
                 String colum_name = cloumnsNameIter.next();
                 LinkedHashMap<String, String> columnsAtt = columns.get(colum_name);
+                int cwidth = getCellWidth(j);
                 if (xTable.getRow(i) == null) continue;
-                setCellText(xDocument, xTable.getRow(i).getCell(j),colum_name, "FFFFFF");
+                setCellText(xDocument, xTable.getRow(i).getCell(j),colum_name, "FFFFFF", cwidth);
 
                 j++;
 
@@ -119,8 +107,8 @@ public final class Word2007 {
 
                 while (columnTypeIter.hasNext()) {
                     String colum_type = columnTypeIter.next();
-
-                    setCellText(xDocument, xTable.getRow(i).getCell(j),columnsAtt.get(colum_type), "FFFFFF");
+                    cwidth = getCellWidth(j);
+                    setCellText(xDocument, xTable.getRow(i).getCell(j),columnsAtt.get(colum_type), "FFFFFF", cwidth);
                     j++;
                 }
                 j = 0;// 恢复第一列
@@ -130,16 +118,25 @@ public final class Word2007 {
             XWPFTableRow row = xTable.insertNewTableRow(0);
             row.setHeight(380);
 			row.addNewTableCell();
+			CTTcPr cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(1600));
 			row.getCell(0).setColor("CCCCCC");
 			row.getCell(0).setText("中文名称");
 			row.addNewTableCell();
+			cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(3000));
+			row.getCell(1).setColor("FFFFFF");
 			row.getCell(1).setText("");
 			row.addNewTableCell();
+			cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(1200));
 			row.getCell(2).setColor("CCCCCC");
 			row.getCell(2).setText("英文名称");
 			row.addNewTableCell();
 			CTTc cttc = row.getCell(3).getCTTc();
 			CTTcPr ctPr = cttc.addNewTcPr();
+			cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(2800));
 			ctPr.addNewGridSpan().setVal(BigInteger.valueOf(4));
 			ctPr.addNewHMerge().setVal(STMerge.CONTINUE);
 			cttc.getPList().get(0).addNewPPr().addNewJc().setVal(STJc.CENTER);
@@ -148,9 +145,13 @@ public final class Word2007 {
 			row = xTable.insertNewTableRow(1);
 			row.setHeight(380);
 			row.addNewTableCell();
+			cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(1600));
 			row.getCell(0).setColor("CCCCCC");
 			row.getCell(0).setText("功能描述");
 			row.addNewTableCell();
+			cellPr = row.getCell(0).getCTTc().addNewTcPr();
+            cellPr.addNewTcW().setW(BigInteger.valueOf(7000));
 			cttc = row.getCell(1).getCTTc();
 			ctPr = cttc.addNewTcPr();
 			ctPr.addNewGridSpan().setVal(BigInteger.valueOf(6));
@@ -179,7 +180,9 @@ public final class Word2007 {
     	}
     }
     
-    private static void setCellText(XWPFDocument xDocument, XWPFTableCell cell, String text, String bgcolor) {
+    private static void setCellText(XWPFDocument xDocument, XWPFTableCell cell, String text, String bgcolor, int width) {
+    	CTTcPr cellPr = cell.getCTTc().addNewTcPr();
+        cellPr.addNewTcW().setW(BigInteger.valueOf(width));
     	cell.setColor(bgcolor);
     	cell.setVerticalAlignment(XWPFVertAlign.CENTER);
         cell.setText(text);
@@ -205,5 +208,25 @@ public final class Word2007 {
         }
 
         return keyColumnMap;
+    }
+    
+    private static int getCellWidth(int index) {
+    	int cwidth = 1000;
+        if (index==0) {
+        	cwidth = 1600;
+        } else if (index==1) {
+        	cwidth = 3000;
+        } else if (index==2) {
+        	cwidth = 1200;
+        } else if (index==3) {
+        	cwidth = 900;
+        } else if (index==4) {
+        	cwidth = 600;
+        } else if (index==5) {
+        	cwidth = 600;
+        } else if (index==6) {
+        	cwidth = 700;
+        }
+        return cwidth;
     }
 }
