@@ -16,3 +16,5 @@ Mysql、SQL Server、PostgreSQL、DB2、oracle
 命令行操作：
 
 <img src="snapshot/2.jpg">
+
+<img src="snapshot/3.jpg">
