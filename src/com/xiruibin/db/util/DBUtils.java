@@ -23,6 +23,8 @@ public final class DBUtils {
 	private Statement stm = null;
 
 	private ResultSet rs = null;
+	
+	private Map<String, String> tableinfo = new LinkedHashMap<String, String>();
 
 	public DBUtils(Parameters parameters) {
 		this.parameters = parameters;
@@ -42,7 +44,7 @@ public final class DBUtils {
 				new String[] { "TABLE" });
 		int n = 0;
 		while (rs.next()) {
-//			 if (n>5)
+//			 if (n>27)
 //				 break;
 			String table_name = rs.getString("TABLE_NAME");
 			LinkedHashMap<String, LinkedHashMap<String, String>> tablesMap = info
@@ -57,6 +59,13 @@ public final class DBUtils {
 					+ rs.getString("TABLE_NAME")
 					+ "===========================");
 			ResultSetMetaData rsmd = rs.getMetaData();
+			String remark = rs.getString("REMARKS");
+			if (remark != null && !"null".equals(remark)) {
+				tableinfo.put(rs.getString("TABLE_NAME"), remark);
+			} else {
+				tableinfo.put(rs.getString("TABLE_NAME"), "");
+			}
+			
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				rsmd.getColumnName(i);
 				System.out.println(rsmd.getColumnName(i) + ":"
@@ -127,10 +136,15 @@ public final class DBUtils {
 			System.out.println("");
 			n++;
 		}
+
 		stm = conn.createStatement();
 
 		releaseDBResource();
 		return info;
+	}
+	
+	public Map<String, String> getTableInfo() {
+		return tableinfo;
 	}
 
 	public ResultSet getColumns(String tableName) {

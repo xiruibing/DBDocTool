@@ -30,7 +30,7 @@ public final class Word2007 {
      * @param data
      * @throws Exception
      */
-    public static void productWordForm(Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> data,
+    public static void productWordForm(Map<String, String> tableinfo, Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> data,
                                        Parameters parameters) throws Exception {
         XWPFDocument xDocument = new XWPFDocument();
 
@@ -39,7 +39,7 @@ public final class Word2007 {
             String table_name = tableNameIter.next();
             XWPFParagraph xp = xDocument.createParagraph();
             XWPFRun r1 = xp.createRun();
-            r1.setText(table_name);
+            r1.setText(table_name + " " + tableinfo.get(table_name));
             r1.setFontSize(18);
             r1.setTextPosition(10);
             
@@ -126,7 +126,7 @@ public final class Word2007 {
 			cellPr = row.getCell(0).getCTTc().addNewTcPr();
             cellPr.addNewTcW().setW(BigInteger.valueOf(3000));
 			row.getCell(1).setColor("FFFFFF");
-			row.getCell(1).setText("");
+			row.getCell(1).setText(tableinfo.get(table_name));
 			row.addNewTableCell();
 			cellPr = row.getCell(0).getCTTc().addNewTcPr();
             cellPr.addNewTcW().setW(BigInteger.valueOf(1200));
