@@ -166,7 +166,7 @@ public final class Word2007 {
         fos.close();
     }
     
-    private static void spanCellsAcrossRow(XWPFTable table, int rowNum, int colNum, int span) {
+    private static void spanCellsAcrossRow(XWPFTable table, int rowNum, int colNum, int span) throws Exception {
     	try {
     		 XWPFTableCell cell = table.getRow(rowNum).getCell(colNum);
     		if (cell.getCTTc().getTcPr() != null) {
