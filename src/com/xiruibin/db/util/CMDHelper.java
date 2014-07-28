@@ -1,6 +1,7 @@
 package com.xiruibin.db.util;
 
 import java.io.File;
+import java.util.Arrays;
 
 import com.xiruibin.Parameters;
 
@@ -56,7 +57,9 @@ public final class CMDHelper {
 			} else if (cmds[i].equals("-s")) {
 				parameter.setSchema(cmds[i + 1]);
 			} else if (cmds[i].equals("-t")) {
-				parameter.setTable(cmds[i + 1]);
+				if (StringUtils.hasLength(cmds[i + 1].toUpperCase())) {
+					parameter.setTables(Arrays.asList(cmds[i + 1].split(",")));
+				}
 			} else if (cmds[i].equals("-h")) {
 				parameter.setHost(cmds[i + 1]);
 			} else if (cmds[i].equals("-P")) {

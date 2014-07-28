@@ -44,9 +44,15 @@ public final class DBUtils {
 				new String[] { "TABLE" });
 		int n = 0;
 		while (rs.next()) {
+			String table_name = rs.getString("TABLE_NAME");
+			if (parameters.getTables() != null) {
+				if (!parameters.getTables().contains(table_name)) {
+					continue;
+				}
+			}
 //			 if (n>27)
 //				 break;
-			String table_name = rs.getString("TABLE_NAME");
+			
 			LinkedHashMap<String, LinkedHashMap<String, String>> tablesMap = info
 					.get(table_name);
 			if (tablesMap == null) {

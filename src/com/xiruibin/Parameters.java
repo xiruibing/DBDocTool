@@ -1,40 +1,44 @@
 package com.xiruibin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.xiruibin.db.util.StringUtils;
 
 public final class Parameters {
+	
 	private String host = "192.168.1.170";
 	private String user;
 	private String port = "50001";// 默认值
 	private String password;
 	private String database;
 	private String schema;
-	private String table = "_NULL_";
+	private List<String> tables = new ArrayList<String>();
 	private String path = "";
 
 	public Parameters() {
 	}
 
 	public Parameters(String host, String user, String port, String password,
-			String database, String table, String path) {
+			String database, List<String> tables, String path) {
 		this.host = host;
 		this.user = user;
 		this.port = port;
 		this.password = password;
 		this.database = database;
-		this.table = table;
+		this.tables = tables;
 		this.path = path;
 	}
 	
 	public Parameters(String host, String user, String port, String password,
-			String database, String schema, String table, String path) {
+			String database, String schema, List<String> tables, String path) {
 		this.host = host;
 		this.user = user;
 		this.port = port;
 		this.password = password;
 		this.database = database;
 		this.schema = schema;
-		this.table = table;
+		this.tables = tables;
 		this.path = path;
 	}
 
@@ -90,13 +94,13 @@ public final class Parameters {
 		this.schema = schema;
 	}
 
-	public String getTable() {
-		return table;
+	public List<String> getTables() {
+		return tables;
 	}
 
-	public void setTable(String table) {
-		if (StringUtils.hasLength(table)) {
-			this.table = table;
+	public void setTables(List<String> tables) {
+		if (tables != null && tables.size()>0) {
+			this.tables = tables;
 		}
 	}
 
