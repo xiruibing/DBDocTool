@@ -2,6 +2,7 @@ package com.xiruibin;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import com.xiruibin.db.util.CMDHelper;
@@ -22,7 +23,7 @@ public class CMDTool {
 		String cmd = "";
 		if (args == null) {
 			Scanner sc = new Scanner(System.in);
-			Log.severe("Please Input Command:");
+			System.out.println("Please Input Command:");
 			cmd = sc.nextLine();
 		} else {
 			cmd = StringUtils.join(string2ObjectArray(args), ' ');
@@ -31,7 +32,7 @@ public class CMDTool {
 		Parameters parameters = CMDHelper.parseCommand(cmd);
 
 		if (parameters == null) {
-			Log.severe("parameter parse exception.");
+			System.err.println("parameter parse exception.");
 			System.exit(-1);
 		}
 		
@@ -47,7 +48,7 @@ public class CMDTool {
 		Word2007.productWordForm(tableinfo, data, parameters);
 
 		long endTime = System.currentTimeMillis();
-		Log.info("总共用时:" + (endTime - startTime) + "ms");
+		System.out.println("总共用时:" + (endTime - startTime) + "ms");
 
 	}
 

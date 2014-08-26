@@ -1,7 +1,6 @@
 package com.xiruibin.db.util;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -10,9 +9,9 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.ibm.db2.jcc.DB2DatabaseMetaData;
 import com.xiruibin.DBDriverAutoLoad;
 import com.xiruibin.DBInfo;
-import com.xiruibin.Log;
 import com.xiruibin.Parameters;
 
 public final class DBUtils {
@@ -39,16 +38,14 @@ public final class DBUtils {
 				DBInfo.getCurrentDriverUrl(parameters.getHost(),
 						parameters.getPort(), parameters.getDatabase()),
 				parameters.getUser(), parameters.getPassword());
-		DatabaseMetaData dmd = conn.getMetaData();
-		String schema = null;
-		if (parameters.getSchema() != null) {
-			schema = parameters.getSchema().toUpperCase();
-		}
-		ResultSet dbrs = dmd.getTables(null, schema, null, new String[] { "TABLE" });
+		DB2DatabaseMetaData dmd = (DB2DatabaseMetaData) conn.getMetaData();
+		ResultSet rs = dmd.getTables(null,
+				parameters.getSchema().toUpperCase(), null,
+				new String[] { "TABLE" });
 		int n = 0;
-		while (dbrs.next()) {
-			String table_name = dbrs.getString("TABLE_NAME");
-			if (!parameters.getTables().isEmpty()) {
+		while (rs.next()) {
+			String table_name = rs.getString("TABLE_NAME");
+			if (parameters.getTables() != null) {
 				if (!parameters.getTables().contains(table_name)) {
 					continue;
 				}
@@ -64,23 +61,25 @@ public final class DBUtils {
 
 			// tablesMap.put(column_name, columnInfo);
 
-			Log.info("==========================="
-					+ dbrs.getString("TABLE_NAME")
+			System.out.println("==========================="
+					+ rs.getString("TABLE_NAME")
 					+ "===========================");
-			ResultSetMetaData rsmd = dbrs.getMetaData();
-			String remark = dbrs.getString("REMARKS");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String remark = rs.getString("REMARKS");
 			if (remark != null && !"null".equals(remark)) {
-				tableinfo.put(dbrs.getString("TABLE_NAME"), remark);
+				tableinfo.put(rs.getString("TABLE_NAME"), remark);
 			} else {
-				tableinfo.put(dbrs.getString("TABLE_NAME"), "");
+				tableinfo.put(rs.getString("TABLE_NAME"), "");
 			}
 			
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				rsmd.getColumnName(i);
-				Log.info(rsmd.getColumnName(i) + ":" + dbrs.getString(i));
+				System.out.println(rsmd.getColumnName(i) + ":"
+						+ rs.getString(i));
 			}
 
-			Log.info("----------------------------------------------------------");
+			System.out
+					.println("----------------------------------------------------------");
 			ResultSet rsc = getColumns(table_name);
 			ResultSetMetaData rscmd = rsc.getMetaData();
 			while (rsc.next()) {
@@ -136,11 +135,11 @@ public final class DBUtils {
 					sb.append(rscmd.getColumnName(j)).append("[")
 							.append(rsc.getObject(j)).append("]").append(" ");
 				}
-				Log.info(sb.toString());
+				System.out.println(sb.toString());
 				tablesMap.put(column_name, columnInfo);
 			}
 			info.put(table_name, tablesMap);
-			Log.info("");
+			System.out.println("");
 			n++;
 		}
 
@@ -156,12 +155,10 @@ public final class DBUtils {
 
 	public ResultSet getColumns(String tableName) {
 		try {
-			DatabaseMetaData db2dmd = conn.getMetaData();
-			String schema = null;
-			if (parameters.getSchema() != null) {
-				schema = parameters.getSchema().toUpperCase();
-			}
-			return db2dmd.getColumns(null, schema, tableName, null);
+			DB2DatabaseMetaData db2dmd = (DB2DatabaseMetaData) conn
+					.getMetaData();
+			return db2dmd.getColumns(null,
+					parameters.getSchema().toUpperCase(), tableName, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
