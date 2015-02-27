@@ -2,7 +2,6 @@ package com.xiruibin;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import com.xiruibin.db.util.CMDHelper;

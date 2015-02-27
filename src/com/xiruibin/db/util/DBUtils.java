@@ -1,6 +1,7 @@
 package com.xiruibin.db.util;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -9,7 +10,6 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.ibm.db2.jcc.DB2DatabaseMetaData;
 import com.xiruibin.DBDriverAutoLoad;
 import com.xiruibin.DBInfo;
 import com.xiruibin.Parameters;
@@ -38,14 +38,16 @@ public final class DBUtils {
 				DBInfo.getCurrentDriverUrl(parameters.getHost(),
 						parameters.getPort(), parameters.getDatabase()),
 				parameters.getUser(), parameters.getPassword());
-		DB2DatabaseMetaData dmd = (DB2DatabaseMetaData) conn.getMetaData();
-		ResultSet rs = dmd.getTables(null,
-				parameters.getSchema().toUpperCase(), null,
-				new String[] { "TABLE" });
+		DatabaseMetaData dmd = conn.getMetaData();
+		String schema = null;
+		if (parameters.getSchema() != null) {
+			schema = parameters.getSchema().toUpperCase();
+		}
+		ResultSet rs = dmd.getTables(null, schema, null, new String[] { "TABLE" });
 		int n = 0;
 		while (rs.next()) {
 			String table_name = rs.getString("TABLE_NAME");
-			if (parameters.getTables() != null) {
+			if (parameters.getTables() != null && parameters.getTables().size()>0) {
 				if (!parameters.getTables().contains(table_name)) {
 					continue;
 				}
@@ -155,10 +157,12 @@ public final class DBUtils {
 
 	public ResultSet getColumns(String tableName) {
 		try {
-			DB2DatabaseMetaData db2dmd = (DB2DatabaseMetaData) conn
-					.getMetaData();
-			return db2dmd.getColumns(null,
-					parameters.getSchema().toUpperCase(), tableName, null);
+			DatabaseMetaData db2dmd = conn.getMetaData();
+			String schema = null;
+			if (parameters.getSchema() != null) {
+				schema = parameters.getSchema().toUpperCase();
+			}
+			return db2dmd.getColumns(null, schema, tableName, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
