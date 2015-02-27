@@ -21,6 +21,8 @@ Mysql、SQL Server、PostgreSQL、DB2、oracle
 
 命令行操作：
 
+根据待生成文档的数据库类型，在lib目录下放置相应数据库jar文件
+
 <img src="snapshot/2.jpg">
 
 <img src="snapshot/3.jpg">
