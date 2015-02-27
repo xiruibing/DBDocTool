@@ -17,12 +17,12 @@ http://xiruibing.github.io/DBDocTool/
 支持以下数据库：
 Mysql、SQL Server、PostgreSQL、DB2、oracle
 
-<img src="snapshot/1.jpg">
+<img src="http://git.oschina.net/xirb/Dbdoctool/blob/master/snapshot/1.jpg">
 
 命令行操作：
 
 根据待生成文档的数据库类型，在lib目录下放置相应数据库jar文件
 
-<img src="snapshot/2.jpg">
+<img src="http://git.oschina.net/xirb/Dbdoctool/blob/master/snapshot/2.jpg">
 
-<img src="snapshot/3.jpg">
+<img src="http://git.oschina.net/xirb/Dbdoctool/blob/master/snapshot/3.jpg">
