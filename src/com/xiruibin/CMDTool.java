@@ -2,7 +2,6 @@ package com.xiruibin;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import com.xiruibin.db.util.CMDHelper;
@@ -10,7 +9,7 @@ import com.xiruibin.db.util.DBUtils;
 import com.xiruibin.db.util.StringUtils;
 
 public class CMDTool {
-	
+    
 	private static Object[] string2ObjectArray(String[] arr) {
 		Object[] obs = new Object[arr.length];
 		for (int i=0; i<arr.length; i++) {
