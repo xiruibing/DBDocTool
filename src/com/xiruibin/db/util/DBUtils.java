@@ -12,11 +12,12 @@ import java.util.Map;
 
 import com.xiruibin.DBDriverAutoLoad;
 import com.xiruibin.DBInfo;
+import com.xiruibin.Log;
 import com.xiruibin.Parameters;
 
 public final class DBUtils {
 
-    private Parameters parameters = null;
+	private Parameters parameters = null;
 
 	private Connection conn = null;
 
@@ -63,7 +64,7 @@ public final class DBUtils {
 
 			// tablesMap.put(column_name, columnInfo);
 
-			System.out.println("==========================="
+			Log.info("==========================="
 					+ rs.getString("TABLE_NAME")
 					+ "===========================");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -76,12 +77,10 @@ public final class DBUtils {
 			
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				rsmd.getColumnName(i);
-				System.out.println(rsmd.getColumnName(i) + ":"
-						+ rs.getString(i));
+				Log.info(rsmd.getColumnName(i) + ":" + rs.getString(i));
 			}
 
-			System.out
-					.println("----------------------------------------------------------");
+			Log.info("----------------------------------------------------------");
 			ResultSet rsc = getColumns(table_name);
 			ResultSetMetaData rscmd = rsc.getMetaData();
 			while (rsc.next()) {
@@ -137,11 +136,11 @@ public final class DBUtils {
 					sb.append(rscmd.getColumnName(j)).append("[")
 							.append(rsc.getObject(j)).append("]").append(" ");
 				}
-				System.out.println(sb.toString());
+				Log.info(sb.toString());
 				tablesMap.put(column_name, columnInfo);
 			}
 			info.put(table_name, tablesMap);
-			System.out.println("");
+			Log.info("");
 			n++;
 		}
 

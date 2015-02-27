@@ -9,7 +9,7 @@ import com.xiruibin.db.util.DBUtils;
 import com.xiruibin.db.util.StringUtils;
 
 public class CMDTool {
-    
+	
 	private static Object[] string2ObjectArray(String[] arr) {
 		Object[] obs = new Object[arr.length];
 		for (int i=0; i<arr.length; i++) {
@@ -22,7 +22,7 @@ public class CMDTool {
 		String cmd = "";
 		if (args == null) {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Please Input Command:");
+			Log.severe("Please Input Command:");
 			cmd = sc.nextLine();
 		} else {
 			cmd = StringUtils.join(string2ObjectArray(args), ' ');
@@ -31,7 +31,7 @@ public class CMDTool {
 		Parameters parameters = CMDHelper.parseCommand(cmd);
 
 		if (parameters == null) {
-			System.err.println("parameter parse exception.");
+			Log.severe("parameter parse exception.");
 			System.exit(-1);
 		}
 		
@@ -47,7 +47,7 @@ public class CMDTool {
 		Word2007.productWordForm(tableinfo, data, parameters);
 
 		long endTime = System.currentTimeMillis();
-		System.out.println("总共用时:" + (endTime - startTime) + "ms");
+		Log.info("总共用时:" + (endTime - startTime) + "ms");
 
 	}
 
