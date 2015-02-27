@@ -44,11 +44,11 @@ public final class DBUtils {
 		if (parameters.getSchema() != null) {
 			schema = parameters.getSchema().toUpperCase();
 		}
-		ResultSet rs = dmd.getTables(null, schema, null, new String[] { "TABLE" });
+		ResultSet dbrs = dmd.getTables(null, schema, null, new String[] { "TABLE" });
 		int n = 0;
-		while (rs.next()) {
-			String table_name = rs.getString("TABLE_NAME");
-			if (parameters.getTables() != null && parameters.getTables().size()>0) {
+		while (dbrs.next()) {
+			String table_name = dbrs.getString("TABLE_NAME");
+			if (!parameters.getTables().isEmpty()) {
 				if (!parameters.getTables().contains(table_name)) {
 					continue;
 				}
@@ -65,19 +65,19 @@ public final class DBUtils {
 			// tablesMap.put(column_name, columnInfo);
 
 			Log.info("==========================="
-					+ rs.getString("TABLE_NAME")
+					+ dbrs.getString("TABLE_NAME")
 					+ "===========================");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			String remark = rs.getString("REMARKS");
+			ResultSetMetaData rsmd = dbrs.getMetaData();
+			String remark = dbrs.getString("REMARKS");
 			if (remark != null && !"null".equals(remark)) {
-				tableinfo.put(rs.getString("TABLE_NAME"), remark);
+				tableinfo.put(dbrs.getString("TABLE_NAME"), remark);
 			} else {
-				tableinfo.put(rs.getString("TABLE_NAME"), "");
+				tableinfo.put(dbrs.getString("TABLE_NAME"), "");
 			}
 			
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				rsmd.getColumnName(i);
-				Log.info(rsmd.getColumnName(i) + ":" + rs.getString(i));
+				Log.info(rsmd.getColumnName(i) + ":" + dbrs.getString(i));
 			}
 
 			Log.info("----------------------------------------------------------");
