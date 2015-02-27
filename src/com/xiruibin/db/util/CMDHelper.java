@@ -3,6 +3,7 @@ package com.xiruibin.db.util;
 import java.io.File;
 import java.util.Arrays;
 
+import com.xiruibin.Log;
 import com.xiruibin.Parameters;
 
 /**
@@ -20,7 +21,7 @@ public final class CMDHelper {
 	 * 打印帮助信息
 	 */
 	public static void printCmdHelp() {
-		System.out.println(cmdHelpString);
+		Log.info(cmdHelpString);
 	}
 
 	/**
@@ -39,7 +40,7 @@ public final class CMDHelper {
 		}
 
 		if (cmds.length < 6) {
-			System.err.println("参数不全.");
+			Log.severe("参数不全.");
 			CMDHelper.printCmdHelp();
 			// System.exit(-1);
 			return null;
@@ -67,7 +68,7 @@ public final class CMDHelper {
 			} else if (cmds[i].equals("--path")) {
 				parameter.setPath(resolvePath(cmds[i + 1]));
 			} else {
-				System.err.println(cmds[i] + "is Illegal parameters!");
+				Log.severe(cmds[i] + "is Illegal parameters!");
 				CMDHelper.printCmdHelp();
 				return null;
 			}
