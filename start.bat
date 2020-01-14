@@ -1,8 +1,8 @@
 @echo off
 mode con cols=100 lines=30
 color 3f
-title DBDocToolæ•°æ®åº“æ–‡æ¡£è‡ªåŠ¨ç”Ÿæˆå·¥å…·
-rem æ¥æ”¶è¾“å…¥
+title DBDocToolÊı¾İ¿âÎÄµµ×Ô¶¯Éú³É¹¤¾ß
+rem ½ÓÊÕÊäÈë
 set dbtype=
 set dbhost=
 set dbport=
@@ -11,26 +11,26 @@ set dbuser=
 set dbpasswd=
 set dbschema=
 set docpath=
-echo DBDocToolæ•°æ®åº“æ–‡æ¡£è‡ªåŠ¨ç”Ÿæˆå·¥å…·
+echo DBDocToolÊı¾İ¿âÎÄµµ×Ô¶¯Éú³É¹¤¾ß
 echo -------------------------------
-echo è¯¦æƒ…å‚çœ‹ï¼šhttp://git.oschina.net/xirb/Dbdoctool
-echo è¯¥é¡¹ç›®å°†æŒç»­æ›´æ–°ï¼Œè®¡åˆ’æä¾›å„ç§æ¨¡ç‰ˆï¼Œå®ç°è‡ªå®šä¹‰æ¨¡ç‰ˆï¼Œæ”¯æŒå•è¡¨æˆ–è¡¨é›†åˆç”Ÿæˆï¼Œæ–¹ä¾¿ç¨‹åºå‘˜ä¹¦å†™æ•°æ®åº“æ–‡æ¡£
-echo æŠŠæ•°æ®åº“è¡¨ç»“æ„ä¿¡æ¯è½¬åŒ–ä¸ºæ•°æ®åº“æ–‡æ¡£
+echo ÏêÇé²Î¿´£ºhttp://git.oschina.net/xirb/Dbdoctool
+echo ¸ÃÏîÄ¿½«³ÖĞø¸üĞÂ£¬¼Æ»®Ìá¹©¸÷ÖÖÄ£°æ£¬ÊµÏÖ×Ô¶¨ÒåÄ£°æ£¬Ö§³Öµ¥±í»ò±í¼¯ºÏÉú³É£¬·½±ã³ÌĞòÔ±ÊéĞ´Êı¾İ¿âÎÄµµ
+echo °ÑÊı¾İ¿â±í½á¹¹ĞÅÏ¢×ª»¯ÎªÊı¾İ¿âÎÄµµ
 echo ====================================================================================================
-echo æ•°æ®åº“ç±»å‹ï¼šAï¼šMysql Bï¼šSQL Server Cï¼šOracle Dï¼šDB2 Eï¼šPostgreSQL
-set /p dbtype=è¯·é€‰æ‹©æ•°æ®åº“ç±»å‹ï¼š
-rem è¾“å‡ºå¾—åˆ°çš„è¾“å…¥ä¿¡æ¯
-echo æ‚¨é€‰æ‹©çš„æ•°æ®åº“ç±»å‹æ˜¯ï¼š%dbtype%
+echo Êı¾İ¿âÀàĞÍ£ºA£ºMysql B£ºSQL Server C£ºOracle D£ºDB2 E£ºPostgreSQL
+set /p dbtype=ÇëÑ¡ÔñÊı¾İ¿âÀàĞÍ£º
+rem Êä³öµÃµ½µÄÊäÈëĞÅÏ¢
+echo ÄúÑ¡ÔñµÄÊı¾İ¿âÀàĞÍÊÇ£º%dbtype%
 echo ====================================================================================================
-set /p dbhost=æ•°æ®åº“IPï¼š
-set /p dbport=æ•°æ®åº“ç«¯å£ï¼š
-set /p dbname=æ•°æ®åº“åç§°ï¼š
-set /p dbuser=æ•°æ®åº“ç”¨æˆ·åï¼š
-set /p dbpasswd=æ•°æ®åº“å¯†ç ï¼š
-if "%dbtype%"=="C" set /p dbschema=æ•°æ®åº“æ¨¡å¼ï¼š
-if "%dbtype%"=="D" set /p dbschema=æ•°æ®åº“æ¨¡å¼ï¼š
-if "%dbtype%"=="E" set /p dbschema=æ•°æ®åº“æ¨¡å¼ï¼š
-set /p docpath=æ–‡æ¡£ä¿å­˜è·¯å¾„ï¼š
-echo æ­£åœ¨ç”Ÿæˆ......
+set /p dbhost=Êı¾İ¿âIP£º
+set /p dbport=Êı¾İ¿â¶Ë¿Ú£º
+set /p dbname=Êı¾İ¿âÃû³Æ£º
+set /p dbuser=Êı¾İ¿âÓÃ»§Ãû£º
+set /p dbpasswd=Êı¾İ¿âÃÜÂë£º
+if "%dbtype%"=="C" set /p dbschema=Êı¾İ¿âÄ£Ê½£º
+if "%dbtype%"=="D" set /p dbschema=Êı¾İ¿âÄ£Ê½£º
+if "%dbtype%"=="E" set /p dbschema=Êı¾İ¿âÄ£Ê½£º
+set /p docpath=ÎÄµµ±£´æÂ·¾¶£º
+echo ÕıÔÚÉú³É......
 if "%dbschema%"=="" (db_doc -h %dbhost% -d %dbname% -u %dbuser% -p %dbpasswd% -P %dbport% --path %docpath%) else (db_doc -h %dbhost% -d %dbname% -u %dbuser% -p %dbpasswd% -P %dbport% -s %dbschema% --path %docpath%)
 pause

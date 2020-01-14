@@ -22,7 +22,7 @@ public class DBInfo {
 		DB_DRIVER_MAP.put("oracle", "oracle.jdbc.driver.OracleDriver");
 
 		
-		DB_URL_MAP.put("mysql", "jdbc:mysql://{ip}:{port}/{database}");
+		DB_URL_MAP.put("mysql", "jdbc:mysql://{ip}:{port}/{database}?useOldAliasMetadataBehavior=true&useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&zeroDateTimeBehavior=convertToNull&useInformationSchema=true");
 		DB_URL_MAP
 				.put("sqlserver2000",
 						"jdbc:microsoft:sqlserver://{ip}:{port};DatabaseName={database}");

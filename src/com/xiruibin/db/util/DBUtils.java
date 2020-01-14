@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.xiruibin.DBDriverAutoLoad;
@@ -24,7 +26,7 @@ public final class DBUtils {
 	private Statement stm = null;
 
 	private ResultSet rs = null;
-	
+
 	private Map<String, String> tableinfo = new LinkedHashMap<String, String>();
 
 	public DBUtils(Parameters parameters) {
@@ -32,18 +34,17 @@ public final class DBUtils {
 		DBDriverAutoLoad.load();
 	}
 
-	public Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> getDatabaseInfo()
-			throws Exception {
+	public Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> getDatabaseInfo() throws Exception {
 		Map<String, LinkedHashMap<String, LinkedHashMap<String, String>>> info = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
 		conn = DriverManager.getConnection(
-				DBInfo.getCurrentDriverUrl(parameters.getHost(),
-						parameters.getPort(), parameters.getDatabase()),
+				DBInfo.getCurrentDriverUrl(parameters.getHost(), parameters.getPort(), parameters.getDatabase()),
 				parameters.getUser(), parameters.getPassword());
 		DatabaseMetaData dmd = conn.getMetaData();
 		String schema = null;
 		if (parameters.getSchema() != null) {
 			schema = parameters.getSchema().toUpperCase();
 		}
+
 		ResultSet dbrs = dmd.getTables(null, schema, null, new String[] { "TABLE" });
 		int n = 0;
 		while (dbrs.next()) {
@@ -55,18 +56,22 @@ public final class DBUtils {
 			}
 //			 if (n>27)
 //				 break;
-			
-			LinkedHashMap<String, LinkedHashMap<String, String>> tablesMap = info
-					.get(table_name);
+
+			// 获取表的主键
+			List<String> pkList = new ArrayList<String>();
+			ResultSet pkInfo = dmd.getPrimaryKeys(null, schema, table_name);
+			while (pkInfo.next()) {
+				pkList.add(pkInfo.getString("COLUMN_NAME"));
+			}
+
+			LinkedHashMap<String, LinkedHashMap<String, String>> tablesMap = info.get(table_name);
 			if (tablesMap == null) {
 				tablesMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 			}
 
 			// tablesMap.put(column_name, columnInfo);
 
-			Log.info("==========================="
-					+ dbrs.getString("TABLE_NAME")
-					+ "===========================");
+			Log.info("===========================" + table_name + "===========================");
 			ResultSetMetaData rsmd = dbrs.getMetaData();
 			String remark = dbrs.getString("REMARKS");
 			if (remark != null && !"null".equals(remark)) {
@@ -74,7 +79,7 @@ public final class DBUtils {
 			} else {
 				tableinfo.put(dbrs.getString("TABLE_NAME"), "");
 			}
-			
+
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				rsmd.getColumnName(i);
 				Log.info(rsmd.getColumnName(i) + ":" + dbrs.getString(i));
@@ -85,10 +90,11 @@ public final class DBUtils {
 			ResultSetMetaData rscmd = rsc.getMetaData();
 			while (rsc.next()) {
 				String column_name = rsc.getString("COLUMN_NAME");
-				LinkedHashMap<String, String> columnInfo = tablesMap
-						.get(column_name);
-				if (columnInfo == null)
+				LinkedHashMap<String, String> columnInfo = tablesMap.get(column_name);
+				if (columnInfo == null) {
 					columnInfo = new LinkedHashMap<String, String>();
+				}
+				
 				try {
 					columnInfo.put("column_comment", rsc.getString("REMARKS"));
 				} catch (SQLException e) {
@@ -97,11 +103,7 @@ public final class DBUtils {
 
 				String typeName = rsc.getString("TYPE_NAME");
 				if ("CHAR".equals(typeName) || "VARCHAR".equals(typeName)) {
-					columnInfo
-							.put("column_type",
-									typeName + "("
-											+ rsc.getString("COLUMN_SIZE")
-											+ ")");
+					columnInfo.put("column_type", typeName + "(" + rsc.getString("COLUMN_SIZE") + ")");
 				} else {
 					columnInfo.put("column_type", typeName);
 				}
@@ -119,7 +121,8 @@ public final class DBUtils {
 				} else {
 					columnInfo.put("column_si", "");
 				}
-				if ("YES".equals(key)) {
+
+				if (pkList.contains(column_name)) {
 					columnInfo.put("column_key", "√");
 				} else {
 					columnInfo.put("column_key", "");
@@ -133,8 +136,7 @@ public final class DBUtils {
 
 				StringBuilder sb = new StringBuilder();
 				for (int j = 1; j <= rscmd.getColumnCount(); j++) {
-					sb.append(rscmd.getColumnName(j)).append("[")
-							.append(rsc.getObject(j)).append("]").append(" ");
+					sb.append(rscmd.getColumnName(j)).append("[").append(rsc.getObject(j)).append("]").append(" ");
 				}
 				Log.info(sb.toString());
 				tablesMap.put(column_name, columnInfo);
@@ -149,7 +151,7 @@ public final class DBUtils {
 		releaseDBResource();
 		return info;
 	}
-	
+
 	public Map<String, String> getTableInfo() {
 		return tableinfo;
 	}
